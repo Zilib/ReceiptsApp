@@ -1,0 +1,4 @@
+#Application
+Application/.vs/*
+Application/obj/*
+Application/bin/*
