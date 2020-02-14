@@ -41,8 +41,7 @@ namespace Application
 
             #endregion
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+            services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllersWithViews();
         }
 
