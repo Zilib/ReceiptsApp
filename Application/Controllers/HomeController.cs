@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Application.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Controllers
 {
@@ -18,9 +20,11 @@ namespace Application.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
-            return View();
+            object username = HttpContext.User.Identity.Name;
+            return View(username);
         }
 
         public IActionResult Privacy()
