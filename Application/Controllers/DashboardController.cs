@@ -21,12 +21,16 @@ namespace Application.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
+            // Load user to data
             ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
-            string userEmail = applicationUser?.UserName;
+            
+            if(applicationUser.Surname == null ||
+                applicationUser.Name == null)
+            {
+                return RedirectToAction("SetDetails", "Account");
+            }
 
-            object toSend = userEmail;
-
-            return View(toSend);
+            return View();
         }
     }
 }

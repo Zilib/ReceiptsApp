@@ -45,8 +45,6 @@ namespace Application
 
             #endregion
 
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddControllersWithViews();
         }
