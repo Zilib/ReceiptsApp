@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Localization;
+using System.Collections.Specialized;
 
 namespace Application.Areas.Identity.Pages.Account
 {
@@ -104,9 +105,28 @@ namespace Application.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
+                NameValueCollection PolishErrors = new NameValueCollection()
+                {
+                    { "DefaultError", "Nieznany błąd" },
+                    { "DuplicateEmail", $"Email '{Input.Email}' jest zajęty." },
+                    { "DuplicateUserName", $"Email '{Input.Email}' jest zajęty." },
+                    { "PasswordRequireDigit", "Hasło musi zawierać przynajmniej jedną cyfrę ('0'-'9')." },
+                    { "PasswordRequiresLower", "Hasło musi zawierać przynajmniej jeden mały znak ('a' - 'z')." },
+                    { "PasswordRequiresNonAlphanumeric", "Hasło musi zawierać przynajmniej jeden niealfanumeryczny znak" },
+                    { "PasswordRequiresUpper", "Hasło musi zawierać przynajmniej jeden duży znak ('A' - 'Z')." }
+                };
+
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if (PolishErrors[error.Code] != null)
+                    {
+                        ModelState.AddModelError(string.Empty, PolishErrors[error.Code]);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 
